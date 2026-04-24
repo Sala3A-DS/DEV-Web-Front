@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YaRooms — Agendamento de Salas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+    YaRooms
+  </div>
+  <ul class="nav-links">
+    <li class="active">Início</li>
+    <li>Salas</li>
+    <li>Reservas</li>
+    <li>Relatórios</li>
+  </ul>
+  <button class="btn-login">Entrar</button>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span> Sistema de Agendamento Escolar</div>
+  <h1>Reserve salas com<br>praticidade e clareza</h1>
+  <p>Gerencie o uso dos espaços da escola em tempo real. Sem conflitos, sem papéis, sem confusão.</p>
+  <div class="hero-cta">
+    <button class="btn-primary">Fazer reserva agora</button>
+    <button class="btn-outline">Ver disponibilidade</button>
+  </div>
+</section>
+
+<!-- ── MAIN CONTENT ── -->
+<main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="mini-calendar">
+      <div class="cal-header">
+        <span>Abril 2026</span>
+        <div style="display:flex;gap:8px">
+          <span class="cal-nav">‹</span>
+          <span class="cal-nav">›</span>
+        </div>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-day-name">D</div><div class="cal-day-name">S</div>
+        <div class="cal-day-name">T</div><div class="cal-day-name">Q</div>
+        <div class="cal-day-name">Q</div><div class="cal-day-name">S</div>
+        <div class="cal-day-name">S</div>
+
+        <div class="cal-day other-month">30</div>
+        <div class="cal-day">1</div><div class="cal-day">2</div>
+        <div class="cal-day has-event">3</div><div class="cal-day">4</div>
+        <div class="cal-day has-event">5</div><div class="cal-day">6</div>
+
+        <div class="cal-day">7</div><div class="cal-day has-event">8</div>
+        <div class="cal-day">9</div><div class="cal-day has-event">10</div>
+        <div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div>
+
+        <div class="cal-day">14</div><div class="cal-day">15</div>
+        <div class="cal-day today">16</div>
+        <div class="cal-day has-event">17</div><div class="cal-day">18</div>
+        <div class="cal-day">19</div><div class="cal-day">20</div>
+
+        <div class="cal-day">21</div><div class="cal-day has-event">22</div>
+        <div class="cal-day">23</div><div class="cal-day">24</div>
+        <div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div>
+
+        <div class="cal-day">28</div><div class="cal-day has-event">29</div>
+        <div class="cal-day">30</div>
+        <div class="cal-day other-month">1</div><div class="cal-day other-month">2</div>
+        <div class="cal-day other-month">3</div><div class="cal-day other-month">4</div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h3>Tipo de sala</h3>
+      <span class="filter-tag selected">Todas</span>
+      <span class="filter-tag">Laboratório</span>
+      <span class="filter-tag">Auditório</span>
+      <span class="filter-tag">Sala comum</span>
+      <span class="filter-tag">Biblioteca</span>
+    </div>
+
+    <div class="filter-group">
+      <h3>Capacidade</h3>
+      <span class="filter-tag">até 20</span>
+      <span class="filter-tag selected">até 40</span>
+      <span class="filter-tag">+40</span>
+    </div>
+
+    <div class="filter-group">
+      <h3>Recursos</h3>
+      <span class="filter-tag">Projetor</span>
+      <span class="filter-tag selected">Ar-cond.</span>
+      <span class="filter-tag">TV</span>
+      <span class="filter-tag">Lousa</span>
+    </div>
+
+  </aside>
+
+  <!-- SCHEDULE -->
+  <div class="schedule-area">
+    <div class="schedule-header">
+      <h2>Semana de 14 a 18 de abril</h2>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="view-toggle">
+          <button class="view-btn active">Semana</button>
+          <button class="view-btn">Dia</button>
+          <button class="view-btn">Mês</button>
+        </div>
+        <button class="btn-primary" style="padding:7px 16px;font-size:0.8rem">+ Nova reserva</button>
+      </div>
+    </div>
+
+    <div class="time-grid">
+      <!-- Headers -->
+      <div class="grid-header">Hora</div>
+      <div class="grid-header day-header">Seg 14</div>
+      <div class="grid-header day-header">Ter 15</div>
+      <div class="grid-header day-header" style="color:var(--accent)">Qua 16 ●</div>
+      <div class="grid-header day-header">Qui 17</div>
+      <div class="grid-header day-header">Sex 18</div>
+
+      <!-- 7h -->
+      <div class="time-label">7:00</div>
+      <div class="time-slot" data-day="Seg" data-hour="7"></div>
+      <div class="time-slot" data-day="Ter" data-hour="7"></div>
+      <div class="time-slot" data-day="Qua" data-hour="7"></div>
+      <div class="time-slot" data-day="Qui" data-hour="7"></div>
+      <div class="time-slot" data-day="Sex" data-hour="7"></div>
+
+      <!-- 8h -->
+      <div class="time-label">8:00</div>
+      <div class="time-slot" data-day="Seg" data-hour="8">
+        <div class="event event-blue"><strong>Lab. Informática</strong>Prof. Ana</div>
+      </div>
+      <div class="time-slot" data-day="Ter" data-hour="8"></div>
+      <div class="time-slot" data-day="Qua" data-hour="8">
+        <div class="event event-teal"><strong>Sala 12</strong>Prof. Carlos</div>
+      </div>
+      <div class="time-slot" data-day="Qui" data-hour="8"></div>
+      <div class="time-slot" data-day="Sex" data-hour="8">
+        <div class="event event-green"><strong>Auditório</strong>Prof. Rita</div>
+      </div>
+
+      <!-- 9h -->
+      <div class="time-label">9:00</div>
+      <div class="time-slot" data-day="Seg" data-hour="9">
+        <div class="event event-blue"><strong>Lab. Informática</strong>Prof. Ana</div>
+      </div>
+      <div class="time-slot" data-day="Ter" data-hour="9">
+        <div class="event event-amber"><strong>Biblioteca</strong>Prof. Lucas</div>
+      </div>
+      <div class="time-slot" data-day="Qua" data-hour="9">
+        <div class="event event-teal"><strong>Sala 12</strong>Prof. Carlos</div>
+      </div>
+      <div class="time-slot" data-day="Qui" data-hour="9"></div>
+      <div class="time-slot" data-day="Sex" data-hour="9"></div>
+
+      <!-- 10h -->
+      <div class="time-label">10:00</div>
+      <div class="time-slot" data-day="Seg" data-hour="10"></div>
+      <div class="time-slot" data-day="Ter" data-hour="10">
+        <div class="event event-amber"><strong>Biblioteca</strong>Prof. Lucas</div>
+      </div>
+      <div class="time-slot" data-day="Qua" data-hour="10">
+        <div class="event event-red"><strong>Sala 08</strong>Prof. Marta</div>
+      </div>
+      <div class="time-slot" data-day="Qui" data-hour="10">
+        <div class="event event-blue"><strong>Lab. Ciências</strong>Prof. Pedro</div>
+      </div>
+      <div class="time-slot" data-day="Sex" data-hour="10"></div>
+
+      <!-- 11h -->
+      <div class="time-label">11:00</div>
+      <div class="time-slot" data-day="Seg" data-hour="11">
+        <div class="event event-green"><strong>Auditório</strong>Evento</div>
+      </div>
+      <div class="time-slot" data-day="Ter" data-hour="11"></div>
+      <div class="time-slot" data-day="Qua" data-hour="11"></div>
+      <div class="time-slot" data-day="Qui" data-hour="11">
+        <div class="event event-blue"><strong>Lab. Ciências</strong>Prof. Pedro</div>
+      </div>
+      <div class="time-slot" data-day="Sex" data-hour="11">
+        <div class="event event-amber"><strong>Sala 05</strong>Prof. Joana</div>
+      </div>
+
+      <!-- 12h -->
+      <div class="time-label">12:00</div>
+      <div class="time-slot last-row" data-day="Seg" data-hour="12"></div>
+      <div class="time-slot last-row" data-day="Ter" data-hour="12"></div>
+      <div class="time-slot last-row" data-day="Qua" data-hour="12"></div>
+      <div class="time-slot last-row" data-day="Qui" data-hour="12"></div>
+      <div class="time-slot last-row" data-day="Sex" data-hour="12"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── ROOM CARDS ── -->
+<section class="rooms-section">
+  <h2>Salas em destaque</h2>
+  <div class="rooms-grid">
+
+    <div class="room-card">
+      <div class="room-icon" style="background:rgba(78,159,255,0.15)">💻</div>
+      <h4>Lab. Informática</h4>
+      <p>32 computadores · Projetor</p>
+      <div class="room-status status-occupied"><span class="status-dot"></span>Ocupada agora</div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-icon" style="background:rgba(0,212,180,0.15)">🔬</div>
+      <h4>Lab. Ciências</h4>
+      <p>24 bancadas · Ar-cond.</p>
+      <div class="room-status status-available"><span class="status-dot"></span>Disponível</div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-icon" style="background:rgba(251,191,36,0.15)">📢</div>
+      <h4>Auditório</h4>
+      <p>120 lugares · Palco · Som</p>
+      <div class="room-status status-reserved"><span class="status-dot"></span>Reservada</div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-icon" style="background:rgba(52,211,153,0.15)">📚</div>
+      <h4>Biblioteca</h4>
+      <p>40 lugares · Silenciosa</p>
+      <div class="room-status status-available"><span class="status-dot"></span>Disponível</div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-icon" style="background:rgba(248,113,113,0.15)">🎨</div>
+      <h4>Sala de Arte</h4>
+      <p>30 lugares · TV 65"</p>
+      <div class="room-status status-occupied"><span class="status-dot"></span>Ocupada agora</div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-icon" style="background:rgba(78,159,255,0.15)">🏫</div>
+      <h4>Sala 12 — Geral</h4>
+      <p>35 lugares · Lousa digital</p>
+      <div class="room-status status-available"><span class="status-dot"></span>Disponível</div>
+    </div>
+
+  </div>
+</section>
+
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YaRooms — Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  
+  <main class="auth-page">
+    <section class="auth-card">
+      <div class="hero-badge"><span class="dot"></span> Acesso ao Sistema</div>
+      <h1>Entrar no YaRooms</h1>
+      <p>Acesse sua conta para gerenciar reservas, salas e disponibilidade em tempo real.</p>
+
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="seuemail@escola.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="Digite sua senha" required minlength="6">
+        </div>
+
+        <div class="form-options">
+          <label class="checkbox-label">
+            <input type="checkbox" id="lembrar">
+            <span>Lembrar de mim</span>
+          </label>
+          <a href="#">Esqueci minha senha</a>
+        </div>
+
+        <button type="submit" class="btn-primary">Entrar</button>
+      </form>
+
+      <p class="auth-footer">Ainda não tem conta? <a href="cadastro.html">Criar cadastro</a></p>
+    </section>
+  </main>
+
+  <script src="login.js"></script>
+</body>
+</html>

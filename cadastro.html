@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YaRooms — Cadastro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cadastro.css">
+</head>
+<body>
+  
+  <main class="auth-page">
+    <section class="auth-card cadastro-card">
+      <div class="hero-badge"><span class="dot"></span> Novo Usuário</div>
+      <h1>Criar cadastro</h1>
+      <p>Cadastre-se para reservar salas e acompanhar os espaços disponíveis da escola.</p>
+
+      <form id="cadastroForm" class="auth-form">
+        <div class="form-group">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" placeholder="Digite seu nome" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="seuemail@escola.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="tipo">Tipo de usuário</label>
+          <select id="tipo" required>
+            <option value="">Selecione</option>
+            <option value="professor">Professor</option>
+            <option value="coordenador">Coordenador</option>
+            <option value="administrador">Administrador</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" placeholder="Mínimo 6 caracteres" required minlength="6">
+          </div>
+
+          <div class="form-group">
+            <label for="confirmarSenha">Confirmar senha</label>
+            <input type="password" id="confirmarSenha" placeholder="Repita a senha" required minlength="6">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Cadastrar</button>
+      </form>
+
+      <p class="auth-footer">Já possui conta? <a href="login.html">Entrar agora</a></p>
+    </section>
+  </main>
+
+  <script src="cadastro.js"></script>
+</body>
+</html>
