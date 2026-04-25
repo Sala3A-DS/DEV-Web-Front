@@ -27,17 +27,16 @@ body {
 }
 
 /* ── NAVBAR ── */
-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2.5rem;
-  height: 68px;
+nav{
+  display:flex;
+  align-items:center;
+  padding:0 2.5rem;
+  height:68px;
   background: rgba(10,22,40,0.95);
-  border-bottom: 1px solid var(--navy-border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  border-bottom:1px solid var(--navy-border);
+  position:sticky;
+  top:0;
+  z-index:100;
   backdrop-filter: blur(12px);
 }
 
@@ -64,12 +63,16 @@ nav {
 
 .logo-icon svg { width: 18px; height: 18px; fill: white; }
 
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
+.nav-links{
+  display:flex;
+  gap:2rem;
+  list-style:none;
+  font-size:0.875rem;
+  color:var(--text-secondary);
+
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
 }
 
 .nav-links li { cursor: pointer; transition: color .2s; }
