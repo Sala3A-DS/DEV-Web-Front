@@ -1,21 +1,31 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --navy: #0a1628;
-  --navy-card: #162038;
-  --navy-border: #1e3256;
-  --accent: #4e9fff;
-  --accent-light: #7fbdff;
-  --teal: #00d4b4;
-  --text-primary: #e8f0ff;
-  --text-secondary: #8ba3cc;
-  --text-muted: #4e6a99;
-  --badge-bg: rgba(78,159,255,0.15);
+  --navy: #111111;
+  --navy-mid: #1b1f2a;
+  --navy-card: #232833;
+  --navy-border: #2f3747;
+
+  --accent: #1e3a8a;
+  --accent-light: #3b82f6;
+  --accent-glow: rgba(59,130,246,0.20);
+
+  --teal: #60a5fa;
+
+  --text-primary: #f5f5f5;
+  --text-secondary: #c0c7d1;
+  --text-muted: #7d8795;
+
+  --green: #34d399;
+  --amber: #fbbf24;
+  --red: #f87171;
+
+  --badge-bg: rgba(59,130,246,0.12);
 }
 
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--navy);
+   background: linear-gradient(135deg, #111111, #1b1f2a, #0f172a);
   color: var(--text-primary);
   min-height: 100vh;
 }
@@ -216,4 +226,68 @@ input:focus {
   nav { padding: 0 1rem; }
   .nav-links { display: none; }
   .auth-card { padding: 1.5rem; }
+}
+
+.splash{
+   position:fixed;
+   inset:0;
+   background:url("boasvindas.png") center center/cover no-repeat;
+   display:flex;
+   flex-direction:column;
+   justify-content:center;
+   align-items:center;
+   z-index:9999;
+   animation:splashOut 3s ease forwards;
+}
+
+.splash-logo{
+   width:320px;
+   opacity:0;
+   transform:scale(.4);
+   animation:logoIn 1.5s ease forwards;
+}
+
+.welcome-text{
+   margin-top:18px;
+   color:white;
+   font-family:'Sora', sans-serif;
+   font-size:1.8rem;
+   font-weight:700;
+   opacity:0;
+   transform:translateY(20px);
+   animation:textoIn 1s ease forwards;
+   animation-delay:1s;
+}
+
+@keyframes logoIn{
+   0%{
+      opacity:0;
+      transform:scale(.4);
+   }
+   60%{
+      opacity:1;
+      transform:scale(1.08);
+   }
+   100%{
+      opacity:1;
+      transform:scale(1);
+   }
+}
+
+@keyframes textoIn{
+   to{
+      opacity:1;
+      transform:translateY(0);
+   }
+}
+
+@keyframes splashOut{
+   0%,80%{
+      opacity:1;
+   }
+   100%{
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+   }
 }
