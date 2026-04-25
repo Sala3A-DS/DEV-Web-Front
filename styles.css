@@ -490,3 +490,68 @@ main {
 .status-occupied  .status-dot { background: var(--red); }
 .status-reserved  { background: rgba(251,191,36,0.15);  color: var(--amber); }
 .status-reserved  .status-dot { background: var(--amber); }
+
+/* ── SPLASH SCREEN / ANIMAÇÃO INICIAL ── */
+.splash{
+   position:fixed;
+   inset:0;
+   background:url("boasvindas.png") center center/cover no-repeat;
+   display:flex;
+   flex-direction:column;
+   justify-content:center;
+   align-items:center;
+   z-index:9999;
+   animation:splashOut 3s ease forwards;
+}
+
+.splash-logo{
+   width:320px;
+   opacity:0;
+   transform:scale(.4);
+   animation:logoIn 1.5s ease forwards;
+}
+
+.welcome-text{
+   margin-top:18px;
+   color:white;
+   font-family:'Sora', sans-serif;
+   font-size:1.8rem;
+   font-weight:700;
+   opacity:0;
+   transform:translateY(20px);
+   animation:textoIn 1s ease forwards;
+   animation-delay:1s;
+}
+
+@keyframes logoIn{
+   0%{
+      opacity:0;
+      transform:scale(.4);
+   }
+   60%{
+      opacity:1;
+      transform:scale(1.08);
+   }
+   100%{
+      opacity:1;
+      transform:scale(1);
+   }
+}
+
+@keyframes textoIn{
+   to{
+      opacity:1;
+      transform:translateY(0);
+   }
+}
+
+@keyframes splashOut{
+   0%,80%{
+      opacity:1;
+   }
+   100%{
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+   }
+}
