@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agenda de Sala – E.E. Sidronia Nunes Pires</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="agendamento.css"/>
+
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- ══ HEADER ══ -->
+  <header class="header">
+    <div class="emblem-wrap">
+      <div class="school-emblem">SNP</div>
+      <div class="emblem-pulse"></div>
+    </div>
+    <div class="school-info">
+      <h1>E.E. Sidronia Nunes Pires</h1>
+      <p>Agenda de Sala · Horário Semanal</p>
+    </div>
+    <div class="header-right">
+      <div class="turma-label">Turma / Série</div>
+      <div class="turma-input-wrap">
+        <input type="text" id="turma-input" placeholder="Ex: 3A Tarde" autocomplete="off"/>
+        <span class="period-badge manha" id="period-badge">MANHÃ</span>
+      </div>
+      <div class="period-pill" id="period-pill">
+        <div class="period-dot" id="period-dot" style="background:#ffd84d;"></div>
+        <span class="period-lbl" id="period-lbl">Horário da manhã</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ STATS ══ -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-icon blue">📅</div>
+      <div><div class="stat-val" id="st-total">0</div><div class="stat-lbl">Aulas agendadas</div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green">🏫</div>
+      <div><div class="stat-val" id="st-salas">0</div><div class="stat-lbl">Salas em uso</div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon orange">⏰</div>
+      <div><div class="stat-val" id="st-livres">30</div><div class="stat-lbl">Horários livres</div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon purple">🎓</div>
+      <div><div class="stat-val" id="st-period">MANHÃ</div><div class="stat-lbl">Período ativo</div></div>
+    </div>
+  </div>
+
+  <!-- ══ TABLE ══ -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Horário</th>
+          <th class="day-seg"><span class="th-day-name">Segunda-feira</span></th>
+          <th class="day-ter"><span class="th-day-name">Terça-feira</span></th>
+          <th class="day-qua"><span class="th-day-name">Quarta-feira</span></th>
+          <th class="day-qui"><span class="th-day-name">Quinta-feira</span></th>
+          <th class="day-sex"><span class="th-day-name">Sexta-feira</span></th>
+        </tr>
+      </thead>
+      <tbody id="schedule-body"></tbody>
+    </table>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <div class="footer-bar">
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(74,158,232,0.7);"></div>Aula agendada</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(232,104,32,0.85);"></div>Intervalo</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,0.1);"></div>Livre</div>
+    <div class="footer-hint">
+      <span>Clique para agendar</span> · <kbd class="kbd">Ctrl+P</kbd> imprimir · <kbd class="kbd">Esc</kbd> fechar
+    </div>
+  </div>
+
+</div><!-- end page-wrapper -->
+
+<!-- ══ MODAL ══ -->
+<div id="modal-overlay">
+  <div id="modal">
+    <div class="modal-glow-bar" id="modal-glow-bar"></div>
+
+    <div class="modal-header">
+      <div class="modal-icon-box" id="modal-icon-box">📅</div>
+      <div class="modal-header-text">
+        <div class="modal-title" id="modal-title">Agendar Aula</div>
+        <div class="modal-chips">
+          <div class="modal-chip"><div class="chip-dot"></div><span id="chip-dia">—</span></div>
+          <div class="modal-chip"><div class="chip-dot"></div><span id="chip-aula">—</span></div>
+          <div class="modal-chip"><div class="chip-dot"></div><span id="chip-time">—</span></div>
+        </div>
+      </div>
+      <button class="modal-close" id="modal-close-btn" title="Fechar (Esc)">✕</button>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- info aula -->
+      <div class="sec-label"><div class="sl-dot"></div>Informações da Aula</div>
+      <div class="input-row">
+        <div class="field-wrap">
+          <div class="field-label">Disciplina</div>
+          <input class="modal-input" id="inp-materia" placeholder="Ex: Matemática" autocomplete="off"/>
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">Professor(a)</div>
+          <input class="modal-input" id="inp-professor" placeholder="Nome do professor" autocomplete="off"/>
+        </div>
+      </div>
+
+      <!-- sala -->
+      <div class="sec-label"><div class="sl-dot"></div>Selecionar Sala</div>
+      <div class="sala-grid" id="sala-grid"></div>
+
+      <!-- detalhes -->
+      <div class="sec-label"><div class="sl-dot"></div>Detalhes da Reserva</div>
+      <div class="rv-card">
+        <div class="rv-field"><label>Dia</label><span id="rv-dia">—</span></div>
+        <div class="rv-field"><label>Aula</label><span id="rv-aula">—</span></div>
+        <div class="rv-field"><label>Horário</label><span id="rv-horario">—</span></div>
+        <div class="rv-field"><label>Turma</label><span id="rv-turma">—</span></div>
+      </div>
+
+      <!-- obs -->
+      <div class="sec-label"><div class="sl-dot"></div>Observações</div>
+      <textarea class="modal-textarea" id="inp-obs" placeholder="Materiais necessários, observações extras..."></textarea>
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-clear" id="btn-clear">🗑 Limpar</button>
+      <button class="btn-cancel" id="btn-cancel">Cancelar</button>
+      <button class="btn-save" id="btn-save">✓ Confirmar Reserva</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast">
+  <div class="toast-icon">✓</div>
+  <span id="toast-msg">Aula agendada!</span>
+</div>
+
+<script src="agendamento.js"></script>
