@@ -1,3 +1,10 @@
+  // Auto-advance from the intro screen to the home screen.
+  // The intro's staged fade-in animations finish around 5.8s (button delay)
+  // + 1.2s (fade duration) = 7s, so we wait a bit past that before switching.
+  setTimeout(function() {
+    if (typeof go === 'function') { go('home'); }
+  }, 7200);
+
 // ============ STATE ============
 const state = {
   user: null,
@@ -93,6 +100,48 @@ function handleLogin(e) {
   document.getElementById('login-password').value = '';
 }
 
+// ============ PASSWORD STRENGTH ============
+// Regras obrigatórias: mínimo 6 caracteres, 1 letra maiúscula e 1 caractere especial.
+function getPasswordIssues(pwd) {
+  const issues = [];
+  if (pwd.length < 6) issues.push('mínimo de 6 caracteres');
+  if (!/[A-Z]/.test(pwd)) issues.push('1 letra maiúscula');
+  if (!/[^A-Za-z0-9]/.test(pwd)) issues.push('1 caractere especial');
+  return issues;
+}
+
+function getPasswordStrengthLabel(pwd) {
+  if (!pwd) return null;
+  const hasUpper = /[A-Z]/.test(pwd);
+  const hasLower = /[a-z]/.test(pwd);
+  const hasNumber = /[0-9]/.test(pwd);
+  const hasSpecial = /[^A-Za-z0-9]/.test(pwd);
+  const longEnough = pwd.length >= 6;
+  const veryLong = pwd.length >= 10;
+
+  if (!longEnough || !hasUpper || !hasSpecial) {
+    return { level: 'weak', text: 'Senha fraca — precisa de 6+ caracteres, 1 maiúscula e 1 caractere especial' };
+  }
+  if (veryLong && hasLower && hasNumber) {
+    return { level: 'strong', text: 'Senha forte' };
+  }
+  return { level: 'medium', text: 'Senha média — adicione números, letras minúsculas ou mais caracteres para deixá-la forte' };
+}
+
+function updatePasswordStrength() {
+  const pwd = document.getElementById('reg-pass').value;
+  const msgEl = document.getElementById('pwd-strength-msg');
+  if (!msgEl) return;
+  msgEl.classList.remove('weak', 'medium', 'strong');
+  const result = getPasswordStrengthLabel(pwd);
+  if (!result) {
+    msgEl.textContent = '';
+    return;
+  }
+  msgEl.classList.add(result.level);
+  msgEl.textContent = result.text;
+}
+
 function handleRegister(e) {
   e.preventDefault();
   const name = document.getElementById('reg-name').value.trim();
@@ -105,8 +154,9 @@ function handleRegister(e) {
     toast('As senhas não coincidem');
     return;
   }
-  if (p1.length < 6) {
-    toast('A senha precisa ter no mínimo 6 caracteres');
+  const issues = getPasswordIssues(p1);
+  if (issues.length > 0) {
+    toast('A senha precisa ter ' + issues.join(', '));
     return;
   }
   if (state.users.some(u => u.email === email)) {
@@ -123,6 +173,7 @@ function handleRegister(e) {
   document.getElementById('reg-type').value = '';
   document.getElementById('reg-pass').value = '';
   document.getElementById('reg-pass2').value = '';
+  updatePasswordStrength();
 
   // send the user to the login screen, pre-filling the e-mail for convenience
   setTimeout(() => {
@@ -439,6 +490,16 @@ function handleReserve(e) {
 
   const [y, m, d] = dateVal.split('-').map(Number);
   const resDate = new Date(y, m - 1, d);
+
+  // The weekly grid only has columns Seg–Sex (Mon–Fri). A reservation on a
+  // weekend or holiday would never show up there, so block it here with a
+  // clear message instead of silently creating an "invisible" reservation.
+  if (isNonSchoolDay(resDate.getFullYear(), resDate.getMonth(), resDate.getDate())) {
+    const motivo = getNonSchoolLabel(resDate.getFullYear(), resDate.getMonth(), resDate.getDate());
+    toast(`Não é possível reservar em dia não letivo (${motivo}).`);
+    return;
+  }
+
   const who = state.user ? state.user.name.split(' ')[0] : 'Usuário';
   const colorClass = eventColors[eventColorIndex % eventColors.length];
 
@@ -640,9 +701,11 @@ function renderMiniCal() {
   for (let d = 1; d <= daysInMonth; d++) {
     const nonSchool = isNonSchoolDay(year, month, d);
     const hasEvents = eventsThisMonth && eventsThisMonth.has(d);
+    const isSelected = isSelectedMonth && d === state.selectedDay;
     let cls = 'day';
     if (nonSchool && !hasEvents) cls += ' blocked';
     if (hasEvents) cls += ' has-events';
+    if (isSelected) cls += ' active';
 
     if (hasEvents) {
       // A reservation always takes priority in the display, even if the
@@ -720,7 +783,23 @@ const _nextBtn = document.getElementById('mini-cal-next');
 if (_prevBtn) _prevBtn.addEventListener('click', () => changeMiniCalMonth(-1));
 if (_nextBtn) _nextBtn.addEventListener('click', () => changeMiniCalMonth(1));
 
-// Day selection disabled — calendar is display-only; days are marked automatically on reservation.
+// Clicking a day in the mini calendar selects it: updates state.selectedDay/
+// Month/Year and re-renders both the mini calendar (to move the highlight)
+// and the main weekly grid (to jump to that day's week).
+const _miniCalGrid = document.getElementById('mini-cal-grid');
+if (_miniCalGrid) {
+  _miniCalGrid.addEventListener('click', e => {
+    const dayEl = e.target.closest('[data-day]');
+    if (!dayEl || dayEl.classList.contains('muted')) return;
+    const day = parseInt(dayEl.getAttribute('data-day'), 10);
+    if (!day) return;
+    state.selectedDay = day;
+    state.selectedMonth = state.calMonth;
+    state.selectedYear = state.calYear;
+    renderMiniCal();
+    renderMainCalendar();
+  });
+}
 
 // ============ MAIN CALENDAR (week view) ============
 // The weekday columns in the main grid, in display order.
@@ -768,18 +847,35 @@ function getWeekStart() {
   return d;
 }
 
+// Short weekday names (pt-BR) used in the selected-day badge next to the turno bar.
+const WEEKDAY_SHORT = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+
+function updateSelectedDayBadge() {
+  const badge = document.getElementById('selected-day-badge');
+  if (!badge) return;
+  const d = new Date(state.selectedYear, state.selectedMonth, state.selectedDay);
+  badge.textContent = `${WEEKDAY_SHORT[d.getDay()]}, ${d.getDate()} de ${MONTH_NAMES[d.getMonth()]}`;
+}
+
 function renderMainCalendar() {
   const weekStart = getWeekStart();
+  updateSelectedDayBadge();
 
   // Header "today" highlight — only on the selected day, if it's Mon–Fri
   const selectedDate = new Date(state.selectedYear, state.selectedMonth, state.selectedDay);
   const selectedDow = selectedDate.getDay();
   const selectedKey = (selectedDow >= 1 && selectedDow <= 5) ? WEEK_DAYS[selectedDow - 1] : null;
 
-  WEEK_DAYS.forEach(key => {
+  WEEK_DAYS.forEach((key, idx) => {
     const head = document.querySelector(`.cal-cell.head[data-day="${key}"]`);
     if (!head) return;
     head.classList.toggle('today', key === selectedKey);
+    const dateSpan = head.querySelector('.day-num');
+    if (dateSpan) {
+      const cellDate = new Date(weekStart);
+      cellDate.setDate(cellDate.getDate() + idx);
+      dateSpan.textContent = cellDate.getDate();
+    }
   });
 
   // Clear existing events from slots
