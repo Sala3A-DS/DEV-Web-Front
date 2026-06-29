@@ -644,6 +644,39 @@ body::before {
   background-position: right 1rem center;
   padding-right: 2.5rem;
 }
+
+/* Password visibility toggle */
+.password-field {
+  position: relative;
+}
+.password-field .form-input {
+  padding-right: 2.8rem;
+}
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.6rem;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+.password-toggle:hover {
+  color: var(--gold);
+  background: rgba(212, 175, 110, 0.1);
+}
+.password-toggle svg {
+  width: 19px;
+  height: 19px;
+}
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(0.7) sepia(1) saturate(2) hue-rotate(5deg);
   cursor: pointer;

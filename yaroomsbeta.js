@@ -128,6 +128,23 @@ function getPasswordStrengthLabel(pwd) {
   return { level: 'medium', text: 'Senha média — adicione números, letras minúsculas ou mais caracteres para deixá-la forte' };
 }
 
+// ============ PASSWORD VISIBILITY TOGGLE ============
+// Toggles a password input between hidden (••••) and visible (plain text),
+// swapping the eye / eye-off icon on the button accordingly.
+function togglePasswordVisibility(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  const showing = input.type === 'text';
+  input.type = showing ? 'password' : 'text';
+  const eye = btn.querySelector('.icon-eye');
+  const eyeOff = btn.querySelector('.icon-eye-off');
+  if (eye && eyeOff) {
+    eye.style.display = showing ? '' : 'none';
+    eyeOff.style.display = showing ? 'none' : '';
+  }
+  btn.setAttribute('aria-label', showing ? 'Mostrar senha' : 'Ocultar senha');
+}
+
 function updatePasswordStrength() {
   const pwd = document.getElementById('reg-pass').value;
   const msgEl = document.getElementById('pwd-strength-msg');
